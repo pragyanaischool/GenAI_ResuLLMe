@@ -18,7 +18,7 @@ def select_llm_model():
     )
     return model_type
 
-
+'''
 def get_llm_model_and_api(model_type):
     if model_type == "OpenAI":
         api_key = os.getenv("OPENAI_API_KEY")
@@ -42,7 +42,26 @@ def get_llm_model_and_api(model_type):
         api_model = "gemini-1.5-flash"
     return api_key, api_model
 
+'''
+def get_llm_model_and_api():
+    """
+    Function to dynamically obtain Groq API Key and allow users to select a model.
+    """
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        api_key = st.text_input(
+            "Enter your Groq API Key: [(click here to get your API key)](https://console.groq.com/keys)",
+            type="password",
+        )
 
+    # Select from available Groq models
+    api_model = st.selectbox(
+        "Select a model to use with Groq AI:",
+        ["llama3-8b-8192", "llama3-70b-8192", "mixtral-8x7b-32768"],
+        index=0,
+    )
+    
+    return api_key, api_model
 if __name__ == '__main__':
     IFRAME = '<iframe src="https://ghbtns.com/github-btn.html?user=IvanIsCoding&repo=ResuLLMe&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>'
 
